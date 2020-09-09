@@ -1,0 +1,46 @@
+<%- include('../partials/header') %> 
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="/login.css" rel="stylesheet">
+</head>
+<body>  
+       <div class="mx-auto col-12">
+        <form class="form-signin wrapper" action="/admin/login" method="POST" autocomplete="off">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            </div>
+            <div class="form-label-group">
+                <input type="email" id="Email" class="form-control" name="email" placeholder="Email address" required autofocus>
+                <label for="Email">Email address</label>
+            </div>
+
+            <div class="form-label-group">
+                <input type="password" id="Password" class="form-control" placeholder="Password" name="password" required>
+                <label for="Password">Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+        </form>
+      </div>
+<%- include('../partials/footer') %> 

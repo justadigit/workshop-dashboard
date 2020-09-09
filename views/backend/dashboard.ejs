@@ -1,0 +1,589 @@
+<%- include('../partials/header') %> <%- include('../partials/sidebar') %>
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-blue order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Orders Received</h6>
+            <h2 class="text-right">
+              <i class="fa fa-cart-plus f-left"></i><span>486</span>
+            </h2>
+            <p class="m-b-0">
+              Completed Orders<span class="f-right">351</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-green order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Orders Received</h6>
+            <h2 class="text-right">
+              <i class="fa fa-rocket f-left"></i><span>486</span>
+            </h2>
+            <p class="m-b-0">
+              Completed Orders<span class="f-right">351</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-yellow order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Orders Received</h6>
+            <h2 class="text-right">
+              <i class="fa fa-refresh f-left"></i><span>486</span>
+            </h2>
+            <p class="m-b-0">
+              Completed Orders<span class="f-right">351</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-xl-3">
+        <div class="card bg-c-pink order-card">
+          <div class="card-block">
+            <h6 class="m-b-20">Orders Received</h6>
+            <h2 class="text-right">
+              <i class="fa fa-credit-card f-left"></i><span>486</span>
+            </h2>
+            <p class="m-b-0">
+              Completed Orders<span class="f-right">351</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- chart -->
+  <div class="container-fluid canvas">
+    <canvas
+      id="barChart"
+      style="margin: 5%; max-width: 90%; max-height: 600px"
+    ></canvas>
+    <canvas
+      id="pieChart"
+      style="margin: 5%; max-width: 90%; max-height: 600px"
+    ></canvas>
+  </div>
+
+  <!-- chat box -->
+  <div class="container">
+    <div class="row bootstrap snippets bootdeys">
+      <div class="col-md-4">
+        <!-- DIRECT CHAT SUCCESS -->
+        <div class="box box-success direct-chat direct-chat-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Direct Chat</h3>
+
+            <div class="box-tools pull-right">
+              <span
+                data-toggle="tooltip"
+                title="3 New Messages"
+                class="badge bg-green"
+                >3</span
+              >
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-minus"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-toggle="tooltip"
+                title="Contacts"
+                data-widget="chat-pane-toggle"
+              >
+                <i class="fa fa-comments"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="remove"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+              <!-- Message. Default to the left -->
+              <div class="direct-chat-msg">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-left"
+                    >Alexander Pierce</span
+                  >
+                  <span class="direct-chat-timestamp pull-right"
+                    >23 Jan 2:00 pm</span
+                  >
+                </div>
+                <!-- /.direct-chat-info -->
+                <img
+                  class="direct-chat-img"
+                  src="https://bootdey.com/img/Content/user_1.jpg"
+                  alt="Message User Image"
+                /><!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  Is this template really for free? That's unbelievable!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                  <span class="direct-chat-timestamp pull-left"
+                    >23 Jan 2:05 pm</span
+                  >
+                </div>
+                <!-- /.direct-chat-info -->
+                <img
+                  class="direct-chat-img"
+                  src="https://bootdey.com/img/Content/user_2.jpg"
+                  alt="Message User Image"
+                /><!-- /.direct-chat-img -->
+                <div class="direct-chat-text">You better believe it!</div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
+
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img
+                      class="contacts-list-img"
+                      src="https://bootdey.com/img/Content/user_1.jpg"
+                    />
+
+                    <div class="contacts-list-info">
+                      <span class="contacts-list-name">
+                        Count Dracula
+                        <small class="contacts-list-date pull-right"
+                          >2/28/2015</small
+                        >
+                      </span>
+                      <span class="contacts-list-msg"
+                        >How have you been? I was...</span
+                      >
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="message"
+                  placeholder="Type Message ..."
+                  class="form-control"
+                />
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-success btn-flat">
+                    Send
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+      <div class="col-md-4">
+        <!-- DIRECT CHAT SUCCESS -->
+        <div class="box box-primary direct-chat direct-chat-success">
+          <div class="box-header with-border">
+            <h3 class="box-title">Direct Chat</h3>
+
+            <div class="box-tools pull-right">
+              <span
+                data-toggle="tooltip"
+                title="3 New Messages"
+                class="badge bg-green"
+                >3</span
+              >
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-minus"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-toggle="tooltip"
+                title="Contacts"
+                data-widget="chat-pane-toggle"
+              >
+                <i class="fa fa-comments"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="remove"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+              <!-- Message. Default to the left -->
+              <div class="direct-chat-msg">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-left"
+                    >Alexander Pierce</span
+                  >
+                  <span class="direct-chat-timestamp pull-right"
+                    >23 Jan 2:00 pm</span
+                  >
+                </div>
+                <!-- /.direct-chat-info -->
+                <img
+                  class="direct-chat-img"
+                  src="https://bootdey.com/img/Content/user_1.jpg"
+                  alt="Message User Image"
+                /><!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  Is this template really for free? That's unbelievable!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                  <span class="direct-chat-timestamp pull-left"
+                    >23 Jan 2:05 pm</span
+                  >
+                </div>
+                <!-- /.direct-chat-info -->
+                <img
+                  class="direct-chat-img"
+                  src="https://bootdey.com/img/Content/user_2.jpg"
+                  alt="Message User Image"
+                /><!-- /.direct-chat-img -->
+                <div class="direct-chat-text">You better believe it!</div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
+
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img
+                      class="contacts-list-img"
+                      src="https://bootdey.com/img/Content/user_1.jpg"
+                    />
+
+                    <div class="contacts-list-info">
+                      <span class="contacts-list-name">
+                        Count Dracula
+                        <small class="contacts-list-date pull-right"
+                          >2/28/2015</small
+                        >
+                      </span>
+                      <span class="contacts-list-msg"
+                        >How have you been? I was...</span
+                      >
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="message"
+                  placeholder="Type Message ..."
+                  class="form-control"
+                />
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-success btn-flat">
+                    Send
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+
+      <div class="col-md-4">
+        <!-- DIRECT CHAT DANGER -->
+        <div class="box box-danger direct-chat direct-chat-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">Direct Chat</h3>
+
+            <div class="box-tools pull-right">
+              <span
+                data-toggle="tooltip"
+                title="3 New Messages"
+                class="badge bg-red"
+                >3</span
+              >
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="collapse"
+              >
+                <i class="fa fa-minus"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-toggle="tooltip"
+                title="Contacts"
+                data-widget="chat-pane-toggle"
+              >
+                <i class="fa fa-comments"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-box-tool"
+                data-widget="remove"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <!-- Conversations are loaded here -->
+            <div class="direct-chat-messages">
+              <!-- Message. Default to the left -->
+              <div class="direct-chat-msg">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-left"
+                    >Alexander Pierce</span
+                  >
+                  <span class="direct-chat-timestamp pull-right"
+                    >23 Jan 2:00 pm</span
+                  >
+                </div>
+                <!-- /.direct-chat-info -->
+                <img
+                  class="direct-chat-img"
+                  src="https://bootdey.com/img/Content/user_1.jpg"
+                  alt="Message User Image"
+                /><!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  Is this template really for free? That's unbelievable!
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+
+              <!-- Message to the right -->
+              <div class="direct-chat-msg right">
+                <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                  <span class="direct-chat-timestamp pull-left"
+                    >23 Jan 2:05 pm</span
+                  >
+                </div>
+                <!-- /.direct-chat-info -->
+                <img
+                  class="direct-chat-img"
+                  src="https://bootdey.com/img/Content/user_2.jpg"
+                  alt="Message User Image"
+                /><!-- /.direct-chat-img -->
+                <div class="direct-chat-text">You better believe it!</div>
+                <!-- /.direct-chat-text -->
+              </div>
+              <!-- /.direct-chat-msg -->
+            </div>
+            <!--/.direct-chat-messages-->
+
+            <!-- Contacts are loaded here -->
+            <div class="direct-chat-contacts">
+              <ul class="contacts-list">
+                <li>
+                  <a href="#">
+                    <img
+                      class="contacts-list-img"
+                      src="https://bootdey.com/img/Content/user_1.jpg"
+                    />
+
+                    <div class="contacts-list-info">
+                      <span class="contacts-list-name">
+                        Count Dracula
+                        <small class="contacts-list-date pull-right"
+                          >2/28/2015</small
+                        >
+                      </span>
+                      <span class="contacts-list-msg"
+                        >How have you been? I was...</span
+                      >
+                    </div>
+                    <!-- /.contacts-list-info -->
+                  </a>
+                </li>
+                <!-- End Contact Item -->
+              </ul>
+              <!-- /.contatcts-list -->
+            </div>
+            <!-- /.direct-chat-pane -->
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <form action="#" method="post">
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="message"
+                  placeholder="Type Message ..."
+                  class="form-control"
+                />
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-danger btn-flat">
+                    Send
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!-- /.box-footer-->
+        </div>
+        <!--/.direct-chat -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End modal -->
+<%- include('../partials/footer') %>
+<script>
+  //bar
+  var ctxB = document.getElementById('barChart').getContext('2d');
+  var myBarChart = new Chart(ctxB, {
+    type: 'bar',
+    data: {
+      labels: [
+        '1 sept',
+        '2 sept',
+        '3 sept',
+        '4 sept',
+        '5 sept',
+        '6 sept',
+        '7 sept',
+        '8 sept',
+        '9 sept',
+      ],
+      datasets: [
+        {
+          label: '# of Orders',
+          data: [15, 20, 19, 12, 20, 11, 30, 15, 16],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+            'rgba(255,99,132,1)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  //pie
+  var ctxP = document.getElementById('pieChart').getContext('2d');
+  var myPieChart = new Chart(ctxP, {
+    type: 'pie',
+    data: {
+      labels: ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'],
+      datasets: [
+        {
+          data: [300, 50, 100, 40, 120],
+          backgroundColor: [
+            '#F7464A',
+            '#46BFBD',
+            '#FDB45C',
+            '#949FB1',
+            '#4D5360',
+          ],
+          hoverBackgroundColor: [
+            '#FF5A5E',
+            '#5AD3D1',
+            '#FFC870',
+            '#A8B3C5',
+            '#616774',
+          ],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+    },
+  });
+</script>

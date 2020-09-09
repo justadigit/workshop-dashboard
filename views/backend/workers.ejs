@@ -1,0 +1,230 @@
+<%- include('../partials/header') %> <%- include('../partials/sidebar') %>
+<div class="content">
+  <div class="container bootstrap snippets bootdey">
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="mini-stat clearfix bg-facebook rounded">
+          <span class="mini-stat-icon"
+            ><i class="fas fa-users"></i></i
+          ></span>
+          <div class="mini-stat-info">
+            <span>14</span>
+            Worker Teams
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="mini-stat clearfix bg-twitter rounded">
+          <span class="mini-stat-icon"
+            ><i class="fas fa-user"></i></i
+          ></span>
+          <div class="mini-stat-info">
+            <span>500</span>
+            Workers
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- workers list -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-outline card-primary">
+          <div class="card-header">
+            <button
+              class="btn btn-success float-right"
+              style="visibility: visibile"
+              data-toggle="modal"
+              data-target="#addModal"
+            >
+              <i class="fas fa-plus"></i> ADD
+            </button>
+          </div>
+          <div class="card-body">
+            <table id="news_table" class="display">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Photo</th>
+                  <th>Title</th>
+                  <th>Body</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<!-- Adding Form -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Form</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="create-blog content">
+          <form action="" id="news_create" enctype="multipart/form-data">
+            <div
+              class="bg-danger preview-image"
+              style="width: 170px; height: 90px"
+            >
+              <img
+                src="https://dapp.dblog.org/img/default.jpg"
+                alt=""
+                style="
+                  width: 100%;
+                  height: 100%;
+                  border: 1px solid rgb(209, 202, 202);
+                "
+                id="preview-image-file"
+              />
+              <input
+                type="file"
+                id="newsImage"
+                class="d-none"
+                name="newsImage"
+                onchange=" showPreview(event)"
+              />
+              <label
+                for="newsImage"
+                class="d-block p-2 bg-success text-center text-light"
+                style="width: 100%"
+                >Upload Image</label
+              >
+            </div>
+
+            <label for="title" class="mt-5">Title:</label>
+            <textarea
+              name="title"
+              id="titte"
+              cols="30"
+              rows="2"
+              id="title"
+            ></textarea>
+            <label for="body">Body:</label>
+            <textarea
+              name="body"
+              id="body"
+              cols="30"
+              rows="10"
+              class="summernote"
+            ></textarea>
+            <button
+              type="submit"
+              class="btn btn-outline-default btn-sm rounded-0"
+            >
+              ADD
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Editing Form -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="create-blog content">
+          <form action="" id="news_update" enctype="multipart/form-data">
+            <input type="hidden" id="uid" name="uid" value="id" />
+            <div
+              class="bg-danger preview-image"
+              style="width: 170px; height: 90px"
+            >
+              <img
+                src="https://dapp.dblog.org/img/default.jpg"
+                alt=""
+                style="
+                  width: 100%;
+                  height: 100%;
+                  border: 1px solid rgb(209, 202, 202);
+                "
+                id="preview-image-file-edit"
+              />
+              <input
+                type="file"
+                id="unewsImage"
+                class="d-none"
+                name="unewsImage"
+                onchange=" showPreviewedit(event)"
+              />
+              <label
+                for="unewsImage"
+                class="d-block p-2 bg-success text-center text-light"
+                style="width: 100%"
+                >Upload Image</label
+              >
+            </div>
+
+            <label for="utitle" class="mt-5">Title:</label>
+            <textarea name="utitle" id="utitle" cols="30" rows="2"></textarea>
+            <label for="ubody">Body:</label>
+            <textarea
+              name="ubody"
+              id="ubody"
+              cols="30"
+              rows="10"
+              class="summernote"
+            ></textarea>
+            <button
+              type="submit"
+              class="btn btn-outline-default btn-sm rounded-0"
+            >
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End modal -->
+<%- include('../partials/footer') %>
+<script>
+  function showPreview(event) {
+    if (event.target.files.length > 0) {
+      var src = URL.createObjectURL(event.target.files[0]);
+      var preview = document.getElementById('preview-image-file');
+      preview.src = src;
+    }
+  }
+  function showPreviewedit(event) {
+    if (event.target.files.length > 0) {
+      var src = URL.createObjectURL(event.target.files[0]);
+      var preview = document.getElementById('preview-image-file-edit');
+      preview.src = src;
+    }
+  }
+</script>
+<script src="/newsmanage.js"></script>
