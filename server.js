@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser');
 const adminRouter = require('./routes/adminRoutes');
+const { checkUser } = require('./middleware/authMiddleware');
 const morgan = require('morgan');
 
 // middleware
@@ -29,4 +30,5 @@ mongoose
   .catch((err) => console.log(err));
 
 // routes
+app.get('*', checkUser);
 app.use('/workshop-admin', adminRouter);

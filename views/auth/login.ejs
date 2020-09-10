@@ -1,46 +1,46 @@
-<%- include('../partials/header') %> 
-<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
-<style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
+<%- include('../partials/header'); -%>
+<div class="login">
+  <form action="/login" id="login">
+    <h2>Login</h2>
+    <label for="email">Email</label>
+    <input type="text" name="email" required />
+    <div class="email error"></div>
+    <label for="password">Password</label>
+    <input type="password" name="password" required />
+    <div class="password error"></div>
+    <button>login</button>
+  </form>
+</div>
+<%- include('../partials/footer'); -%>
+<script>
+  const form = document.querySelector('#login');
+  const emailError = document.querySelector('.email.error');
+  const passwordError = document.querySelector('.password.error');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    //reset error
+    emailError.textContent = '';
+    passwordError.textContent = '';
+    //get user values
+    const email = await form.email.value;
+    const password = await form.password.value;
+    try {
+      const res = await fetch('/workshop-admin/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
       }
+      if (data.user) {
+        location.assign('/workshop-admin');
+      }
+    } catch (err) {
+      console.log(err);
     }
-    
-  </style>
-  <!-- Custom styles for this template -->
-  <link href="/login.css" rel="stylesheet">
-</head>
-<body>  
-       <div class="mx-auto col-12">
-        <form class="form-signin wrapper" action="/admin/login" method="POST" autocomplete="off">
-            <div class="text-center mb-4">
-                <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-            </div>
-            <div class="form-label-group">
-                <input type="email" id="Email" class="form-control" name="email" placeholder="Email address" required autofocus>
-                <label for="Email">Email address</label>
-            </div>
-
-            <div class="form-label-group">
-                <input type="password" id="Password" class="form-control" placeholder="Password" name="password" required>
-                <label for="Password">Password</label>
-            </div>
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
-        </form>
-      </div>
-<%- include('../partials/footer') %> 
+  });
+</script>

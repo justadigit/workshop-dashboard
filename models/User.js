@@ -14,10 +14,9 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password Field is required!'],
     minlength: [6, 'Minimum password length is 6 characters!'],
   },
-  role: {
-    ref: 'Role',
+  name: {
     type: String,
-    required: [true, 'Please check user role'],
+    required: [true, 'Please Fill your WorkShop Name!'],
   },
 });
 
