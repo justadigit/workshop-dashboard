@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 const Workshop = require('../models/Workshop');
 
 const requireAuth = async function (req, res, next) {
-  const token = req.cookies.workshopjwt;
+  const token = req.cookies.jwt;
 
   //check json web token exists and is verified
   if (token) {
@@ -21,14 +20,14 @@ const requireAuth = async function (req, res, next) {
 };
 //check current user
 const checkUser = (req, res, next) => {
-  const token = req.cookies.workshopjwt;
+  const token = req.cookies.jwt;
   if (token) {
     jwt.verify(token, 'secret', async (err, decodedToken) => {
       if (err) {
         res.locals.user = null;
         next();
       } else {
-        const user = await Workshop.findById(decodedToken.id);
+        const user = await WorkShop.findById(decodedToken.id);
         res.locals.user = user;
         next();
       }

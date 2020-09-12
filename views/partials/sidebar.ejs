@@ -15,7 +15,6 @@
         </a>
       </div>
       <div class="sidebar-wrapper">
-       <% if(user.role=="admin"){ %>
         <ul class="nav">
           <li class="<%= active=="dashboard"?'active':''; %> ">
             <a href="/workshop-admin">
@@ -54,16 +53,6 @@
             </a>
           </li>
         </ul>
-       <% }else{ %> 
-        <ul class="nav">
-          <li class="<%= active=="casher"?'active':''; %> ">
-            <a href="/workshop-admin/casher">
-              <i class="fas fa-cash-register"></i>
-              <p>Casher</p>
-            </a>
-          </li>
-        </ul>
-       <% } %> 
       </div>
     </div>
     <div class="main-panel" style="height: 100vh;">
@@ -112,17 +101,17 @@
               </li>
               <li class="nav-item btn-rotate dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  
-                  <i class="nc-icon nc-user-run"></i><% if(user){ var count = user.email.indexOf("@"); %><%= user.email.slice(0,count) %><% } %>
+                  <% if(user){ %>
+                  <i class="nc-icon nc-user-run"></i><%= user.name %> 
                   <p>
                     <span class="d-lg-none d-md-block">User Controls</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Role - <%= user.role %> </a>
-                  <a class="dropdown-item" href="/workshop-admin/logout">Logout</a>
+                  <a class="dropdown-item" href="#"><i class="fas fa-user-tie"></i> <span class="text-primary"> <%= user.role %> </span></a>
+                  <a class="dropdown-item text-danger" href="/workshop-admin/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </div>
+                  <%} %> 
               </li>
             </ul>
           </div>

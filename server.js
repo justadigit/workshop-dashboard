@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser');
 const adminRouter = require('./routes/adminRoutes');
+const suadminRouter = require('./routes/suadminRoutes');
 const { checkUser } = require('./middleware/authMiddleware');
 const morgan = require('morgan');
 
@@ -31,4 +32,8 @@ mongoose
 
 // routes
 app.get('*', checkUser);
-app.use('/workshop-admin', adminRouter);
+app.get('/', (req, res, next) => {
+  res.render('frontend/home');
+});
+app.use('/', adminRouter);
+app.use('/', suadminRouter);
