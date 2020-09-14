@@ -799,14 +799,14 @@ p {
 .signup form {
   width: 400px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 20px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background: white;
 }
 
 .signup input {
-  padding: 10px 12px;
+  padding: 5px 12px;
   border-radius: 4px;
   border: 1px solid #ddd;
   font-size: 1em;

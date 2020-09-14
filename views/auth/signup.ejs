@@ -1,5 +1,13 @@
 <%- include('../partials/header') %> <%- include('../partials/sidebar') %>
 <div class="content">
+  <ul class="nav nav-tabs my-2 justify-content-end">
+    <li class="nav-item">
+      <a class="nav-link" href="/workshop-admin">home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/workshop-admin/signup">Sign Up</a>
+    </li>
+  </ul>
   <div class="signup">
     <form id="signup">
       <h2>Create Cashier</h2>
@@ -49,7 +57,8 @@
           passwordError.textContent = data.errors.password;
         }
         if (data.user) {
-          $.notify('Register Success', 'success');
+          $('#signup')[0].reset();
+          toastr.success('Creating Cashier Success!');
         }
       } catch (err) {
         console.log(err);

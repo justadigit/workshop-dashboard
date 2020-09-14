@@ -50,7 +50,7 @@ const handleError = (err) => {
 
   if (err.code == 11000) {
     //duplicated Error
-    errors.phone = 'That email/phone number had already registered!';
+    errors.phone = 'That User had already registered!';
     return errors;
   }
 
@@ -62,6 +62,12 @@ const handleError = (err) => {
   }
   //validation error
   if (err.message.includes('Workshop validation failed')) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+  }
+  //validation error
+  if (err.message.includes('Employee validation failed')) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
     });
@@ -95,11 +101,11 @@ module.exports.signup_post = async (req, res) => {
   employee
     .save()
     .then((data) => {
-      res.status(201).json(data._id);
+      res.status(201).json({ user: data._id });
     })
     .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
+      const errors = handleError(err);
+      res.status(400).json({ errors });
     });
 };
 
