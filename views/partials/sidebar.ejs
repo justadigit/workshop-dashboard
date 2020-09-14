@@ -15,44 +15,55 @@
         </a>
       </div>
       <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="<%= active=="dashboard"?'active':''; %> ">
-            <a href="/workshop-admin">
-              <i class="fas fa-tachometer-alt"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li class="<%= active=="employee"?'active':''; %> ">
-            <a href="/workshop-admin/employee">
-              <i class="fas fa-users-cog"></i>
-              <p>Employee</p>
-            </a>
-          </li>
-          <li class="<%= active=="services"?'active':''; %> ">
-            <a href="/workshop-admin/services">
-              <i class="fas fa-people-arrows"></i>
-              <p>Services</p>
-            </a>
-          </li>
-          <li class="<%= active=="investory"?'active':''; %> ">
-            <a href="/workshop-admin/investory">
-              <i class="fas fa-dolly-flatbed"></i>
-              <p>Investory</p>
-            </a>
-          </li>
-          <li class="<%= active=="customers"?'active':''; %> ">
-            <a href="/workshop-admin/customers">
-              <i class="fas fa-users"></i>
-              <p>Customers</p>
-            </a>
-          </li>
-          <li class="<%= active=="casher"?'active':''; %> ">
-            <a href="/workshop-admin/casher">
-              <i class="fas fa-cash-register"></i>
-              <p>Casher</p>
-            </a>
-          </li>
-        </ul>
+          <% if(user.role =="workshopadmin"){ %>
+            <ul class="nav">
+              <li class="<%= active=="dashboard"?'active':''; %> ">
+                <a href="/workshop-admin">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="<%= active=="employee"?'active':''; %> ">
+                <a href="/workshop-admin/employee">
+                  <i class="fas fa-users-cog"></i>
+                  <p>Employee</p>
+                </a>
+              </li>
+              <li class="<%= active=="services"?'active':''; %> ">
+                <a href="/workshop-admin/services">
+                  <i class="fas fa-people-arrows"></i>
+                  <p>Services</p>
+                </a>
+              </li>
+              <li class="<%= active=="investory"?'active':''; %> ">
+                <a href="/workshop-admin/investory">
+                  <i class="fas fa-dolly-flatbed"></i>
+                  <p>Investory</p>
+                </a>
+              </li>
+              <li class="<%= active=="customers"?'active':''; %> ">
+                <a href="/workshop-admin/customers">
+                  <i class="fas fa-users"></i>
+                  <p>Customers</p>
+                </a>
+              </li>
+              <li class="<%= active=="cashier"?'active':''; %> ">
+                <a href="/workshop-admin/cashier">
+                  <i class="fas fa-cash-register"></i>
+                  <p>Casher</p>
+                </a>
+              </li>
+            </ul>
+          <% }else{ %>
+            <ul class="nav">
+              <li class="<%= active=="cashier"?'active':''; %> ">
+                <a href="/workshop-admin/cashier">
+                  <i class="fas fa-cash-register"></i>
+                  <p>Cashier</p>
+                </a>
+              </li>
+            </ul>
+          <% } %>   
       </div>
     </div>
     <div class="main-panel" style="height: 100vh;">

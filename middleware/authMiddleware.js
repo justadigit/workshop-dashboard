@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 const Workshop = require('../models/Workshop');
 
 const requireAuth = async function (req, res, next) {
@@ -7,11 +6,13 @@ const requireAuth = async function (req, res, next) {
 
   //check json web token exists and is verified
   if (token) {
-    jwt.verify(token, 'secret', (err, decodedToken) => {
+    jwt.verify(token, 'secret', async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.redirect('/workshop-admin/login');
       } else {
+        const user = await Workshop.findById(decodedToken.id);
+        res.locals.workshopuser = user;
         next();
       }
     });
@@ -39,4 +40,13 @@ const checkUser = (req, res, next) => {
   }
 };
 
-module.exports = { requireAuth, checkUser };
+//check workshopadmin
+const checkAdmin = function (req, res, next) {
+  console.log(res.locals.workshopuser);
+  if (res.locals.workshopuser.role !== 'workshopadmin') {
+    res.json('Not Allowed!');
+  }
+  next();
+};
+
+module.exports = { requireAuth, checkUser, checkAdmin };

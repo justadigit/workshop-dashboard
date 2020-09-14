@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const adminRouter = require('./routes/adminRoutes');
 const suadminRouter = require('./routes/suadminRoutes');
@@ -8,6 +9,8 @@ const { checkUser } = require('./middleware/authMiddleware');
 const morgan = require('morgan');
 
 // middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());

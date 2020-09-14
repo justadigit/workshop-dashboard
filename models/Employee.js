@@ -1,22 +1,29 @@
 const mongoose = require('mongoose');
-const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
-const userSchema = new mongoose.Schema({
-  email: {
+const employeeSchema = new mongoose.Schema({
+  name: {
     type: String,
-    required: [true, 'Email Field is required!'],
+    required: [true, 'Please Fill Name Field!'],
+  },
+  phone: {
+    type: String,
+    required: [true, 'Phone Number Field is required!'],
     unique: true,
-    lowercase: [true, 'Email must be lowercase'],
-    validate: [isEmail, 'Please Enter a valid Email!'],
+    minlength: [7, 'Minimum Number length is 7 Integer!'],
   },
   password: {
     type: String,
     required: [true, 'Password Field is required!'],
     minlength: [6, 'Minimum password length is 6 characters!'],
   },
-  name: {
+  role: {
     type: String,
-    required: [true, 'Please Fill your WorkShop Name!'],
+    default: 'worker',
+  },
+  workshopID: {
+    ref: 'Workshop',
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
 });
 
@@ -27,14 +34,14 @@ const userSchema = new mongoose.Schema({
 // });
 
 //fire a function before doc saved
-userSchema.pre('save', async function (next) {
+employeeSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
 //fire login function
-userSchema.statics.login = async function (email, password) {
+employeeSchema.statics.login = async function (email, password) {
   const user = await User.findOne({ email });
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
@@ -43,8 +50,8 @@ userSchema.statics.login = async function (email, password) {
     }
     throw Error('incorrect password');
   }
-  throw Error('incorrect email');
+  throw Error('incorrect phone');
 };
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+const Employee = mongoose.model('Employee', employeeSchema);
+module.exports = Employee;

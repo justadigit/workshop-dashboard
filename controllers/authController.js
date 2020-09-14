@@ -1,7 +1,9 @@
 const Role = require('../models/Role');
-const User = require('../models/User');
+const User = require('../models/Employee');
 const jwt = require('jsonwebtoken');
 const Workshop = require('../models/Workshop');
+const Employee = require('../models/Employee');
+const mongoose = require('mongoose');
 
 //get all roles
 module.exports.get_role = (req, res, next) => {
@@ -78,68 +80,30 @@ const createToken = (id) => {
 
 //signup
 module.exports.signup_get = (req, res, next) => {
-  let roles = [];
-  Role.find()
-    .then((data) => {
-      if (data.length > 0) {
-        res.render('auth/signup', { title: 'SignUp', roles: data });
-      } else {
-        res.render('auth/signup', { title: 'SignUp', roles: ['customer'] });
-      }
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+  res.render('auth/signup', { title: 'SignUp', active: 'dashboard' });
 };
 
 module.exports.signup_post = async (req, res) => {
-  const { email, password } = req.body;
-  const role = req.body.role;
-  console.log(role);
-  try {
-    const newuser = await User.create({ email, password, role });
-    const token = createToken(newuser._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: newuser._id });
-  } catch (err) {
-    let errors = handleError(err);
-    res.status(400).json({ errors });
-  }
-};
-
-//signup
-module.exports.signup_get = (req, res, next) => {
-  let roles = [];
-  Role.find()
+  const { name, phone, password, workshopID, role } = await req.body;
+  const employee = new Employee({
+    name,
+    phone,
+    password,
+    role,
+    workshopID,
+  });
+  employee
+    .save()
     .then((data) => {
-      if (data.length > 0) {
-        res.render('auth/signup', { title: 'SignUp', roles: data });
-      } else {
-        res.render('auth/signup', { title: 'SignUp', roles: ['customer'] });
-      }
+      res.status(201).json(data._id);
     })
     .catch((err) => {
+      console.log(err);
       res.status(400).json(err);
     });
-};
-
-module.exports.signup_post = async (req, res) => {
-  const { email, password } = req.body;
-  const role = req.body.role;
-  console.log(role);
-  try {
-    const newuser = await User.create({ email, password, role });
-    const token = createToken(newuser._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: newuser._id });
-  } catch (err) {
-    let errors = handleError(err);
-    res.status(400).json({ errors });
-  }
 };
 
 //login
-
 module.exports.login_get = (req, res) => {
   res.render('auth/login', { title: 'Login' });
 };
@@ -149,7 +113,7 @@ module.exports.login_post = async (req, res) => {
     const workshop = await Workshop.login(phone, password);
     const token = createToken(workshop._id);
     res.cookie('workshopjwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ workshop: workshop._id });
+    res.status(200).json({ workshop: workshop });
   } catch (err) {
     const errors = handleError(err);
     res.status(400).json({ errors });
