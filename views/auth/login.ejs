@@ -37,7 +37,7 @@
         passwordError.textContent = data.errors.password;
       }
       if (data.workshop) {
-        if (data.workshop.role !== 'workshopadmin') {
+        if (data.workshop !== 'workshopadmin') {
           location.assign('/workshop-admin/cashier');
         } else {
           location.assign('/workshop-admin');

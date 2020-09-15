@@ -41,8 +41,8 @@ employeeSchema.pre('save', async function (next) {
 });
 
 //fire login function
-employeeSchema.statics.login = async function (email, password) {
-  const user = await User.findOne({ email });
+employeeSchema.statics.login = async function (phone, password) {
+  const user = await Employee.findOne({ phone });
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
     if (auth) {

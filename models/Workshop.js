@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Employee = require('./Employee');
 const workshopSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -38,10 +39,33 @@ workshopSchema.pre('save', async function (next) {
 //fire login function
 workshopSchema.statics.login = async function (phone, password) {
   const user = await Workshop.findOne({ phone });
+  const cashier = await Employee.findOne({ phone });
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
     if (auth) {
-      return user;
+      return { id: user._id, name: user.name, role: user.role };
+    }
+    throw Error('incorrect password');
+  } else if (cashier) {
+    const auth = await bcrypt.compare(password, cashier.password);
+    if (auth) {
+      let workshopname = [];
+      Employee.findOne(cashier._id)
+        .populate('workshopID')
+        .select('name')
+        .then(async function (data) {
+          workshopname.push(data.workshopID.name);
+          console.log(workshopname);
+        });
+
+      if (workshopname != []) {
+        console.log(workshopname);
+        return {
+          id: cashier._id,
+          name: workshopname[0],
+          role: cashier.role,
+        };
+      }
     }
     throw Error('incorrect password');
   }

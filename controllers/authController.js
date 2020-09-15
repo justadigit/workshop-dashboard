@@ -116,10 +116,17 @@ module.exports.login_get = (req, res) => {
 module.exports.login_post = async (req, res) => {
   const { phone, password } = req.body;
   try {
-    const workshop = await Workshop.login(phone, password);
-    const token = createToken(workshop._id);
-    res.cookie('workshopjwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ workshop: workshop });
+    const { id, name, role } = await Workshop.login(phone, password);
+    const idtoken = createToken(id);
+    res.cookie('workshopjwt', idtoken, {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
+    });
+    res.cookie('workshopname', name, {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
+    });
+    res.status(200).json({ workshop: role });
   } catch (err) {
     const errors = handleError(err);
     res.status(400).json({ errors });
