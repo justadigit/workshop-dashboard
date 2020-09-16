@@ -50,22 +50,17 @@ workshopSchema.statics.login = async function (phone, password) {
     const auth = await bcrypt.compare(password, cashier.password);
     if (auth) {
       let workshopname = [];
-      Employee.findOne(cashier._id)
+      await Employee.findById(cashier._id)
         .populate('workshopID')
         .select('name')
-        .then(async function (data) {
+        .then(function (data) {
           workshopname.push(data.workshopID.name);
-          console.log(workshopname);
         });
-
-      if (workshopname != []) {
-        console.log(workshopname);
-        return {
-          id: cashier._id,
-          name: workshopname[0],
-          role: cashier.role,
-        };
-      }
+      return {
+        id: await cashier._id,
+        name: await workshopname[0],
+        role: await cashier.role,
+      };
     }
     throw Error('incorrect password');
   }

@@ -60,7 +60,6 @@ const checkUser = (req, res, next) => {
 
 //check workshopadmin
 const checkAdmin = function (req, res, next) {
-  console.log(res.locals.user);
   if (res.locals.user.role !== 'workshopadmin') {
     res.json('Not Allowed!');
   }

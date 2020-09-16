@@ -56,7 +56,10 @@ module.exports.register_post = async (req, res, next) => {
     const workshop = await Workshop.create({ name, phone, password });
     const token = createToken(workshop._id);
     res.cookie('workshopjwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-
+    res.cookie('workshopname', name, {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
+    });
     res.status(201).json({ workshop: workshop._id });
   } catch (err) {
     let errors = handleError(err);
