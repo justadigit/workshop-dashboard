@@ -6,9 +6,6 @@ const router = express.Router();
 router.get('/workshop-admin', requireAuth, checkAdmin, (req, res) => {
   res.render('backend/dashboard', { title: 'Dashboard', active: 'dashboard' });
 });
-router.get('/workshop-admin/services', requireAuth, checkAdmin, (req, res) => {
-  res.render('backend/services', { title: 'Services', active: 'services' });
-});
 router.get('/workshop-admin/customers', requireAuth, (req, res) => {
   res.render('backend/customers', { title: 'Customers', active: 'customers' });
 });

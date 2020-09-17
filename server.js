@@ -40,3 +40,6 @@ app.get('/', (req, res, next) => {
 });
 app.use('/', adminRouter);
 app.use('/', suadminRouter);
+app.use('/workshop-admin/', require('./routes/serviceRoutes'));
+//routes//api
+app.use('/workshop/api', require('./api/routes/serviceRoute'));

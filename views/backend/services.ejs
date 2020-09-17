@@ -15,13 +15,13 @@
             </button>
           </div>
           <div class="card-body">
-            <table id="news_table" class="display">
+            <table id="services_table" class="display">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Photo</th>
-                  <th>Title</th>
-                  <th>Body</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Description</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -42,7 +42,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Add Form</h5>
         <button
           type="button"
-          class="close"
+          class="close text-danger"
           data-dismiss="modal"
           aria-label="Close"
         >
@@ -50,58 +50,48 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="create-blog content">
-          <form action="" id="news_create" enctype="multipart/form-data">
-            <div
-              class="bg-danger preview-image"
-              style="width: 170px; height: 90px"
-            >
-              <img
-                src="https://dapp.dblog.org/img/default.jpg"
-                alt=""
-                style="
-                  width: 100%;
-                  height: 100%;
-                  border: 1px solid rgb(209, 202, 202);
-                "
-                id="preview-image-file"
-              />
+        <div class="container">
+          <form id="service_create">
+            <div class="form-group">
+              <% if(user.role=="workshopadmin"){ %>
+              <input type="hidden" name="workshopID" value="<%= user._id %>" />
+              <% }else{ %>
               <input
-                type="file"
-                id="newsImage"
-                class="d-none"
-                name="newsImage"
-                onchange=" showPreview(event)"
+                type="hidden"
+                name="workshopID"
+                value="<%= user.workshopID %>"
               />
-              <label
-                for="newsImage"
-                class="d-block p-2 bg-success text-center text-light"
-                style="width: 100%"
-                >Upload Image</label
-              >
+              <% } %>
+              <label for="name">Name <sup>*</sup></label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                id="name"
+                aria-describedby="emailHelp"
+              />
             </div>
-
-            <label for="title" class="mt-5">Title:</label>
-            <textarea
-              name="title"
-              id="titte"
-              cols="30"
-              rows="2"
-              id="title"
-            ></textarea>
-            <label for="body">Body:</label>
-            <textarea
-              name="body"
-              id="body"
-              cols="30"
-              rows="10"
-              class="summernote"
-            ></textarea>
-            <button
-              type="submit"
-              class="btn btn-outline-default btn-sm rounded-0"
-            >
-              ADD
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input
+                type="number"
+                name="price"
+                class="form-control"
+                id="price"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="description">Description <sup>*</sup></label>
+              <textarea
+                class="form-control"
+                name="description"
+                id="description"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-success rounded-0">
+              Add
             </button>
           </form>
         </div>
@@ -184,19 +174,153 @@
 <!-- End modal -->
 <%- include('../partials/footer') %>
 <script>
-  function showPreview(event) {
-    if (event.target.files.length > 0) {
-      var src = URL.createObjectURL(event.target.files[0]);
-      var preview = document.getElementById('preview-image-file');
-      preview.src = src;
-    }
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    },
+  });
+  let servicedetail = $('#services_table').DataTable();
+  //news detail list
+  function services_detail() {
+    servicedetail.clear().draw();
+    $.ajax({
+      url: '/workshop/api/services',
+      type: 'get',
+      dataType: 'json',
+    })
+      .done(function (response) {
+        console.table(response);
+        $.each(response.services, function (key, value) {
+          let id = value._id;
+          let num = key + 1;
+          let name = value.name;
+          let description =
+            value.description.length > 30
+              ? value.description.slice(0, 30) + ' . . . '
+              : value.description;
+          let price =
+            value.price.length > 30
+              ? value.price.slice(0, 30) + ' . . .'
+              : value.price;
+          let button = `
+        <button type="submit" name="detail" data-id=${id} class="btn btn-sm btn-outline-default rounded-0 data_detail p-1"><i class="fas fa-info-circle"></i></button>
+         <button type="submit" name="button" data-id=${id} class="btn btn-sm btn-outline-info rounded-0 edit_data p-1" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></button>
+          <button type="submit" name="button" data-id=${id} class="btn btn-sm btn-outline-danger rounded-0 delete_data p-1"><i class="far fa-trash-alt"></i></button>
+         `;
+
+          servicedetail.row.add([num, name, price, description, button]).draw();
+        });
+      })
+      .fail(function (error) {
+        console.log(error);
+      });
   }
-  function showPreviewedit(event) {
-    if (event.target.files.length > 0) {
-      var src = URL.createObjectURL(event.target.files[0]);
-      var preview = document.getElementById('preview-image-file-edit');
-      preview.src = src;
-    }
-  }
+
+  $(function () {
+    services_detail();
+
+    //insert service list
+    // $('.summernote').summernote('code');
+    // $('.usummernote').summernote('code');
+    $(document).on('submit', '#service_create', async (e) => {
+      e.preventDefault();
+      var name = await e.target.name.value;
+      var workshopID = await e.target.workshopID.value;
+      var description = await e.target.description.value;
+      var price = await e.target.price.value;
+      try {
+        const res = await fetch('/workshop-admin/services', {
+          method: 'POST',
+          body: JSON.stringify({ name, price, description, workshopID }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+        const data = await res.json();
+        // console.log(data);
+        if (data.err) {
+          console.log(data.err);
+        }
+        if (data.name) {
+          $('#service_create')[0].reset();
+          services_detail();
+          $('#addModal').modal('hide');
+          toastr.success('Service Add Successfully!');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+
+    //details
+    $(document).on('click', '.data_detail', (e) => {
+      let id = $(e.target).data('id');
+      window.location.href = '/admin/news/' + id;
+    });
+
+    //delete
+    $(document).on('click', '.delete_data', (e) => {
+      let id = $(e.target).data('id');
+      if (confirm('Are You Sure')) {
+        $.ajax({
+          url: '/admin/news/' + id,
+          method: 'DELETE',
+        })
+          .done((response) => {
+            services_detail();
+            console.log(response);
+          })
+          .fail((error) => console.log(error));
+      }
+    });
+
+    //edit
+    //get data to edit
+    $(document).on('click', '.edit_data', function () {
+      let id = $(this).data('id');
+      $.ajax({
+        url: '/admin/news/edit/' + id,
+        type: 'get',
+      })
+        .done(function (response) {
+          console.log(response);
+          $('#preview-image-file-edit').attr('src', '/' + response.newsImage);
+          $('#utitle').val(response.title);
+          $('#ubody').summernote('code', response.body);
+          $('#uid').val(response._id);
+        })
+        .fail(function (error) {
+          console.log(error);
+        });
+    });
+
+    $(document).on('submit', '#news_update', (e) => {
+      e.preventDefault();
+      var fd = new FormData();
+      var files = $('#unewsImage')[0].files[0];
+      var title = e.target.utitle.value;
+      var body = e.target.ubody.value;
+      fd.append('unewsImage', files);
+      fd.append('utitle', title);
+      fd.append('ubody', body);
+      $.ajax({
+        url: '/admin/news/edit/' + e.target.uid.value,
+        type: 'PATCH',
+        data: fd,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+      })
+        .done(function (response) {
+          services_detail();
+          console.log(response);
+          $('#editModal').modal('hide');
+          $('#news_update')[0].reset();
+          document.getElementById('preview-image-file-edit').src =
+            'https://dapp.dblog.org/img/default.jpg';
+          $('.usummernote').summernote('code', '');
+        })
+        .fail(function (error) {
+          console.log(error);
+        });
+    });
+  });
 </script>
-<script src="/newsmanage.js"></script>

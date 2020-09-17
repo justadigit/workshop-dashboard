@@ -683,22 +683,6 @@ p {
   color: #205081 !important;
 }
 
-/* create styles */
-.create-blog form {
-  max-width: 750px;
-  margin: 0 auto;
-}
-.create-blog input,
-.create-blog textarea {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 8px;
-}
-.create-blog label {
-  display: block;
-}
-
 .login .main-content {
   width: 50%;
   border-radius: 20px;
